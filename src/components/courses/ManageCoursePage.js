@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
 import { loadAuthors } from "../../redux/actions/authorActions";
-
-import CourseForm from "./CourseForm";
-import Spinner from "../common/Spinner";
-import { newCourse } from "../../../tools/mockData";
-
 import PropTypes from "prop-types";
+import CourseForm from "./CourseForm";
+import { newCourse } from "../../../tools/mockData";
+import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 
-function ManageCoursePage({
+export function ManageCoursePage({
   courses,
   authors,
   loadAuthors,
@@ -52,7 +49,7 @@ function ManageCoursePage({
     const { title, authorId, category } = course;
     const errors = {};
 
-    if (!title) errors.title = "Title is required";
+    if (!title) errors.title = "Title is required.";
     if (!authorId) errors.author = "Author is required";
     if (!category) errors.category = "Category is required";
 
@@ -94,14 +91,12 @@ ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
-  loadAuthors: PropTypes.func.isRequired,
   loadCourses: PropTypes.func.isRequired,
+  loadAuthors: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-// selector function - selects data from redux store
 export function getCourseBySlug(courses, slug) {
   return courses.find((course) => course.slug === slug) || null;
 }
@@ -121,8 +116,8 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   loadCourses,
-  saveCourse,
   loadAuthors,
+  saveCourse,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
